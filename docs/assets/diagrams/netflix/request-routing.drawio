@@ -1,0 +1,65 @@
+<mxfile host="65bd71144e">
+    <diagram name="Request Routing" id="0">
+        <mxGraphModel dx="560" dy="933" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="700" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="Cross-Region Request Routing — Zuul Isthmus Mode" style="text;html=1;align=left;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#232F3E;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="700" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="user" value="User" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.authenticated_user;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="280" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="dns" value="UltraDNS / Route 53" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.route_53;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="280" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="regionA" value="Region A" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;fontStyle=1;fontSize=14;fillColor=#F5F5F5;strokeColor=#545B64;dashed=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="140" width="260" height="360" as="geometry"/>
+                </mxCell>
+                <mxCell id="zuulA" value="Zuul — Region A" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.api_gateway;" parent="regionA" vertex="1">
+                    <mxGeometry x="91" y="90" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="noteA" value="checks request against&#xa;current routing state →&#xa;mismatch: session belongs&#xa;to Region B" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;align=center;dashed=1;" parent="regionA" vertex="1">
+                    <mxGeometry x="40" y="220" width="180" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="regionB" value="Region B" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;fontStyle=1;fontSize=14;fillColor=#F5F5F5;strokeColor=#545B64;dashed=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;" parent="1" vertex="1">
+                    <mxGeometry x="860" y="140" width="260" height="360" as="geometry"/>
+                </mxCell>
+                <mxCell id="zuulB" value="Zuul — Region B" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.api_gateway;" parent="regionB" vertex="1">
+                    <mxGeometry x="91" y="90" width="78" height="78" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" value="1. resolve netflix.com" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;labelBackgroundColor=#ffffff;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="user" target="dns" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="2. Region A (geo-routed answer)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;labelBackgroundColor=#ffffff;entryX=0;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="dns" target="zuulA" edge="1">
+                    <mxGeometry x="0.2319" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="402" y="319"/>
+                            <mxPoint x="402" y="250"/>
+                        </Array>
+                        <mxPoint x="320" y="308" as="sourcePoint"/>
+                        <mxPoint x="453" y="250.00000000000006" as="targetPoint"/>
+                        <mxPoint y="1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e3" value="3. proxy request (isthmus mode)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.35;exitDx=0;exitDy=0;entryX=0;entryY=0.35;entryDx=0;entryDy=0;" parent="1" source="zuulA" target="zuulB" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" value="4. response" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.65;exitDx=0;exitDy=0;entryX=1;entryY=0.65;entryDx=0;entryDy=0;" parent="1" source="zuulB" target="zuulA" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="5. response" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;dashed=1;labelBackgroundColor=#ffffff;exitX=0;exitY=0.77;exitDx=0;exitDy=0;" parent="1" source="zuulA" edge="1">
+                    <mxGeometry x="0.1855" relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="440" y="290"/>
+                            <mxPoint x="440" y="460"/>
+                            <mxPoint x="79" y="460"/>
+                        </Array>
+                        <mxPoint x="79" y="380" as="targetPoint"/>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

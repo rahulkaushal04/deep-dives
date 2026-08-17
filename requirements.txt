@@ -1,0 +1,4 @@
+# Pin versions once you have a working build (`pip freeze > requirements.txt`).
+mkdocs-material>=9.7.7
+mkdocs-git-revision-date-localized-plugin>=1.5.3
+pymdown-extensions>=11.0.1

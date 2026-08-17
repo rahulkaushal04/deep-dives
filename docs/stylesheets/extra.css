@@ -1,0 +1,52 @@
+/* Site-wide tweaks on top of Material for MkDocs defaults. */
+
+/* Slightly narrower line length for long-form architecture write-ups. */
+.md-typeset {
+  font-size: 0.72rem;
+}
+
+.md-typeset table:not([class]) {
+  font-size: 0.68rem;
+}
+
+/* Make pros/cons admonitions visually distinct without new icon packs. */
+.md-typeset .admonition.pros,
+.md-typeset details.pros {
+  border-color: #2e7d32;
+}
+
+.md-typeset .pros > .admonition-title,
+.md-typeset .pros > summary {
+  background-color: rgba(46, 125, 50, 0.1);
+  border-color: #2e7d32;
+}
+
+.md-typeset .pros > .admonition-title::before,
+.md-typeset .pros > summary::before {
+  background-color: #2e7d32;
+  -webkit-mask-image: var(--md-admonition-icon--success);
+  mask-image: var(--md-admonition-icon--success);
+}
+
+.md-typeset .admonition.cons,
+.md-typeset details.cons {
+  border-color: #c62828;
+}
+
+.md-typeset .cons > .admonition-title,
+.md-typeset .cons > summary {
+  background-color: rgba(198, 40, 40, 0.1);
+  border-color: #c62828;
+}
+
+.md-typeset .cons > .admonition-title::before,
+.md-typeset .cons > summary::before {
+  background-color: #c62828;
+  -webkit-mask-image: var(--md-admonition-icon--failure);
+  mask-image: var(--md-admonition-icon--failure);
+}
+
+/* Mermaid diagrams: don't let them overflow narrow viewports. */
+.md-typeset .mermaid {
+  overflow-x: auto;
+}
