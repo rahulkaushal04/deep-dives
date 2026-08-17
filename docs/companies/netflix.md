@@ -4,7 +4,7 @@ Netflix runs its streaming service out of three AWS regions at once, all serving
 
 ## 1. The Problem
 
-On Christmas Eve 2012, an AWS ELB failure in Netflix's only production region, US-EAST-1, took the whole service down. It happened on one of the year's highest-traffic nights. That's the origin story.
+On Christmas Eve 2012, an AWS ELB failure in Netflix's US-EAST-1 region took down streaming for the US, Canada, and Latin America, while the UK, Ireland, and Nordic service, running in a separate region, kept working. It happened on one of the year's highest-traffic nights. That's the origin story.
 
 The broader lesson showed up again in September 2015. A DynamoDB issue in US-EAST-1 cascaded into degradation across more than 20 other AWS services, over a six to eight hour window. No amount of redundancy inside a region protects you when the region itself is the failure domain.
 
@@ -14,7 +14,7 @@ Netflix's answer wasn't a warm standby that scales up after detecting a failure.
 
 Two independent systems decide where a request goes, and they can disagree. That disagreement is the interesting part.
 
-**DNS layer (Denominator):** Netflix layers two DNS providers. UltraDNS handles geo-directional routing: in steady state, traffic splits roughly 50/50 between US-EAST-1 and US-WEST-2 by geography. Route53 sits underneath it and is what actually gets repointed during an evacuation, because moving a CNAME in Route53 is faster than reconfiguring UltraDNS's territory groups. Denominator is the internal abstraction layer that lets Netflix drive both without hardcoding either vendor's API into the failover logic.
+**DNS layer (Denominator):** Netflix layers two DNS providers. UltraDNS handles geo-directional routing: in steady state, traffic splits roughly 50/50 between US-EAST-1 and US-WEST-2 by geography. Route53 sits underneath it and is what actually gets repointed during an evacuation, because moving a CNAME in Route53 is more straightforward operationally than reconfiguring UltraDNS's territory groups. Denominator is the internal abstraction layer that lets Netflix drive both without hardcoding either vendor's API into the failover logic.
 
 **Edge layer (Zuul):** DNS decisions are sticky. TTLs, caching, and long-lived sessions mean a request can physically land in a region that no longer "owns" that user. Zuul's job at that point is to notice and correct it:
 
@@ -82,7 +82,7 @@ The replacement model, built bottom-up:
 
    **scaling ratio = Σ (device type % of traffic × that device's evacuation ratio)**
 
-   Worked example from the source: a service that's 60% CE traffic (which scales 1.4x during evacuation) and 40% Android (scales 1.2x) gets `(0.60 × 1.4) + (0.40 × 1.2) = 1.32x`. Pre-scale that service's capacity in the healthy regions to 132% of nominal before triggering the evacuation, not by whatever SPS says.
+   Worked example from the source: a service that's 30% CE traffic (which scales 2x during evacuation), 40% Android (scales 2.5x), and 30% iOS (scales 1.5x) gets `(0.30 × 2) + (0.40 × 2.5) + (0.30 × 1.5) = 2.05x`. Pre-scale that service's capacity in the healthy regions to 205% of nominal before triggering the evacuation, not by whatever SPS says.
 
 Netflix is explicit that this new model is also an approximation. It assumes all traffic for a given device type has the same "shape" (Android playback and Android logging scale identically), which isn't strictly true either. This isn't a solved problem so much as a better-fitting approximation, one that will need revisiting as the service graph keeps changing.
 
